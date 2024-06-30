@@ -17,7 +17,7 @@
 getPopulationFit <- function(testobj,
                              gene = NULL,
                              type = 'time',
-                             num.timepoint = 1e3){
+                             num.timepoint = NULL){
   type <- toupper(type)
   if (!'testvar' %in% names(testobj)) {
     testvar <- testobj$testvar <- 2
@@ -33,7 +33,11 @@ getPopulationFit <- function(testobj,
   knotnum = testobj$knotnum
   pseudotime = testobj$pseudotime
   pseudotime = pseudotime[order(pseudotime)]
-  pt <- round(seq(1, max(pseudotime), length.out = min(num.timepoint, max(pseudotime)))) ## downsample
+  if (is.null(num.timepoint)) {
+    pt <- pseudotime
+  } else {
+    pt <- seq(min(pseudotime), max(pseudotime), length.out = num.timepoint) ## downsample
+  }
   
   if (sum(design[, 1]) != nrow(design)){
     print("The first column of design matrix should be all 1s (intercept)! Using the first column as the variable column ...")
