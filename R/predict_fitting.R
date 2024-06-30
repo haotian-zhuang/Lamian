@@ -111,7 +111,7 @@ predict_fitting <-
       return(pred + populationFit[gene, , drop = FALSE])
     } else {
       l <- lapply(populationFit, function(i) {
-        pred + i[gene, pseudotime , drop = FALSE]
+        pred + i[gene, names(pseudotime) , drop = FALSE]
       })
       return(l)
     }
